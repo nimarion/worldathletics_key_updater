@@ -1,0 +1,23 @@
+name: Build & Run
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+      - name: Installed package list
+        run: apt list --installed
+      - name: Install Google Chrome 
+        run: |
+          chmod +x ./InstallChrome.sh
+          ./InstallChrome.sh
+      - name: Run jar file 
+        run: java -jar target/WorldathleticsKeyUpdater-1.0-SNAPSHOT-shaded.jar
