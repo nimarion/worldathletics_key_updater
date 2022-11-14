@@ -1,0 +1,17 @@
+# Stellate configuration. Learn more at https://docs.stellate.co/docs/cli
+injectHeaders: true
+enablePlayground: true
+passThroughOnly: false
+headers:
+  x-api-key: wa-api-key
+rootTypeNames:
+  query: Query
+  mutation: Mutation
+rules:
+  - types:
+      - Query
+    maxAge: 900
+    swr: 900
+    description: Cache everything (default)
+name: worldathletics
+originUrl: wa-api-endpoint

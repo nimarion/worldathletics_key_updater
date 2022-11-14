@@ -1,10 +1,14 @@
 package de.pfingstsportfest.worldathletics;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.Iterator;
 import java.util.logging.Level;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -51,13 +55,22 @@ public class Main {
                         JSONObject request = params.getJSONObject("request");
 
                         if (request.has("headers")) {
-                            System.out.println("API-Endpoint: " + request.getString("url"));
-                            System.out
-                                    .println("API-KEY: " + request.getJSONObject("headers").getString("x-api-key"));
+                            String apiEndpoint = request.getString("url");
+                            String apiKey = request.getJSONObject("headers").getString("x-api-key");
+                        
+                            Path path = Paths.get("stellate.yml");
+                            Charset charset = StandardCharsets.UTF_8;
+
+                            String content = new String(Files.readAllBytes(path), charset);
+                            content = content.replaceAll("wa-api-key", apiKey);
+                            content = content.replaceAll("wa-api-endpoint", apiEndpoint);
+                            System.out.println(content);
+                            Files.write(path, content.getBytes(charset));
+                            System.out.println(apiEndpoint + ":" + apiKey);
                             break;
                         }
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

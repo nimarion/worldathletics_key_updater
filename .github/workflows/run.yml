@@ -13,11 +13,19 @@ jobs:
           java-version: 17
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-      - name: Installed package list
-        run: apt list --installed
       - name: Install Google Chrome 
         run: |
           chmod +x ./InstallChrome.sh
           ./InstallChrome.sh
       - name: Run jar file 
         run: java -jar target/WorldathleticsKeyUpdater-1.0-SNAPSHOT-shaded.jar
+      - name: Print stellate config
+        run: cat stellate.yml
+      - uses: actions/setup-node@v2 
+        with: 
+          node-version: '16.3.0'
+          check-latest: true 
+      - name: Push to Stellate
+        run: npx stellate push 
+        env: 
+          STELLATE_TOKEN: ${{ secrets.STELLATE_TOKEN }}
