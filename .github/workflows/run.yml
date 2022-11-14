@@ -1,31 +1,32 @@
-name: Build & Run
+name: 🚀 Build & Run
 
-on: [push]
+on: 
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set up JDK
+      - name: ✨ Set up JDK
         uses: actions/setup-java@v1
         with:
           java-version: 17
-      - name: Build with Maven
+      - name: 🏗️ Build with Maven
         run: mvn -B package --file pom.xml
-      - name: Install Google Chrome 
+      - name: 🌐 Install Google Chrome 
         run: |
           chmod +x ./InstallChrome.sh
           ./InstallChrome.sh
-      - name: Run jar file 
+      - name: 🏃 Run jar file 
         run: java -jar target/WorldathleticsKeyUpdater-1.0-SNAPSHOT-shaded.jar
-      - name: Print stellate config
-        run: cat stellate.yml
       - uses: actions/setup-node@v2 
         with: 
           node-version: '16.3.0'
           check-latest: true 
-      - name: Push to Stellate
+      - name: 🚀 Push to Stellate
         run: npx stellate push 
         env: 
           STELLATE_TOKEN: ${{ secrets.STELLATE_TOKEN }}
