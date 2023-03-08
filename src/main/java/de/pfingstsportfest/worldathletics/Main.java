@@ -26,6 +26,7 @@ public class Main {
         String url = "https://www.worldathletics.org/athletes/-/14193865";
         WebDriverManager.chromedriver().setup();
         ChromeDriver driver = null;
+        int status = -1;
         try {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--headless");
@@ -43,8 +44,6 @@ public class Main {
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 
             LogEntries logs = driver.manage().logs().get("performance");
-            int status = -1;
-            System.out.println("\\nList of log entries:\\n");
             for (Iterator<LogEntry> it = logs.iterator(); it.hasNext();) {
                 LogEntry entry = it.next();
                 try {
@@ -64,9 +63,9 @@ public class Main {
                             String content = new String(Files.readAllBytes(path), charset);
                             content = content.replaceAll("wa-api-key", apiKey);
                             content = content.replaceAll("wa-api-endpoint", apiEndpoint);
-                            System.out.println(content);
                             Files.write(path, content.getBytes(charset));
                             System.out.println(apiEndpoint + ":" + apiKey);
+                            status = 0;
                             break;
                         }
                     }
@@ -74,14 +73,14 @@ public class Main {
                     e.printStackTrace();
                 }
             }
-            System.out.println("\nstatus code: " + status);
         } finally
 
         {
             if (driver != null) {
-                driver.quit();
+               driver.quit();
             }
         }
+        System.exit(status);
     }
 
     public static void main(String... args) {
