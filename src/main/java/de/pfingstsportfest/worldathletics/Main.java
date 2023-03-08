@@ -31,6 +31,7 @@ public class Main {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--headless");
             options.addArguments("--disable-gpu");
+            options.addArguments("--remote-allow-origins=*");
 
             DesiredCapabilities cap = new DesiredCapabilities();
             cap.setCapability(ChromeOptions.CAPABILITY, options);
