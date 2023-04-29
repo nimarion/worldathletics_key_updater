@@ -58,7 +58,7 @@ public class Main {
                             String apiEndpoint = request.getString("url");
                             String apiKey = request.getJSONObject("headers").getString("x-api-key");
                         
-                            Path path = Paths.get("stellate.yml");
+                            Path path = Paths.get("stellate.ts");
                             Charset charset = StandardCharsets.UTF_8;
 
                             String content = new String(Files.readAllBytes(path), charset);
