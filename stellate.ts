@@ -15,7 +15,7 @@ const config: Config = {
         description: 'cache all queries',
         maxage: 43200,
         swr: 86400,
-        types: ['query'],
+        types: ['Query'],
       },
     ],
   },
