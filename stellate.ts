@@ -13,7 +13,7 @@ const config: Config = {
     rules: [
       {
         description: 'cache all queries',
-        maxage: 43200,
+        maxAge: 43200,
         swr: 86400,
         types: ['Query'],
       },
