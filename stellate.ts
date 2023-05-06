@@ -18,6 +18,10 @@ const config: Config = {
         types: ['Query'],
       },
     ],
+    customAttributes: {
+      // Extract the value from the HTTP header called `x-athlete-id`
+      athleteId: { header: 'x-athlete-id' },
+    },
   },
 }
 export default config
