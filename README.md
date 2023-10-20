@@ -3,7 +3,9 @@
 # World Athletics GraphQL Credentials Fetcher
 
 Periodically visits the World Athletics website and fetches the GraphQL credentials from the network requests using Selenium.
-Credentials are then pushed to stellate using stellate-cli.
+Credentials are then pushed to Stellate using stellate-cli.
+
+Used for the [WorldAthletics Proxy Server](https://github.com/nimarion/worldathletics)
 
 ## Built with 
 
