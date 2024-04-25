@@ -9,11 +9,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: ✨ Set up JDK
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v4
         with:
-          java-version: 17
+          java-version: 21
+          distribution: 'adopt'
       - name: 🏗️ Build with Maven
         run: mvn -B package --file pom.xml
       - name: 🌐 Install Google Chrome 
@@ -22,9 +23,9 @@ jobs:
           ./InstallChrome.sh
       - name: 🏃 Run jar file 
         run: java -jar target/WorldathleticsKeyUpdater-1.0-SNAPSHOT-shaded.jar
-      - uses: actions/setup-node@v2 
+      - uses: actions/setup-node@v4
         with: 
-          node-version: '16.3.0'
+          node-version: 22
           check-latest: true 
       - name: 🚀 Push to Stellate
         run: npx stellate push 
