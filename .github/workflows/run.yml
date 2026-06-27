@@ -21,8 +21,38 @@ jobs:
         run: |
           chmod +x ./InstallChrome.sh
           ./InstallChrome.sh
-      - name: 🏃 Run jar file 
-        run: java -jar target/WorldathleticsKeyUpdater-1.0-SNAPSHOT-shaded.jar
+      - name: 🏃 Run jar file & Extract API Key
+        id: run_updater
+        run: |
+          # Run the jar and save stdout to a temporary log file
+          java -jar target/WorldathleticsKeyUpdater-1.0-SNAPSHOT-shaded.jar > updater.log
+          cat updater.log
+
+          # Find the line containing the 'http' and split it by colon
+          LINE=$(grep -E "https?://[^ ]+:[^ ]+" updater.log | tail -n 1)
+          if [ -n "$LINE" ]; then
+            # Extract everything after the last colon (the apiKey)
+            API_KEY="${LINE##*:}"
+            
+            # Mask the secret so it never prints in GitHub Action logs
+            echo "::add-mask::$API_KEY"
+            
+            # Save it to the step outputs
+            echo "api_key=$API_KEY" >> "$GITHUB_OUTPUT"
+            echo "Successfully extracted the updated API key."
+          else
+            echo "Error: Could not find the endpoint and key pattern in the output."
+            exit 1
+          fi
+
+      - name: 🚀 Push key update to NestJS Application
+        if: steps.run_updater.outputs.api_key != ''
+        run: |
+          curl -X PUT "https://worldathletics.nimarion.de/graphql/api-key" \
+            -H "x-admin-secret: ${{ secrets.WORLDATHLETICS_ADMIN_SECRET }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"apiKey\": \"${{ steps.run_updater.outputs.api_key }}\"}"
+
       - uses: actions/setup-node@v6
         with: 
           node-version: 22
