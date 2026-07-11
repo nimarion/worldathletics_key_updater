@@ -68,6 +68,6 @@ jobs:
           node-version: 22
           check-latest: true 
       - name: 🚀 Push to Stellate
-        run: npx stellate push
+        run: npx stellate@latest push
         env: 
           STELLATE_TOKEN: ${{ secrets.STELLATE_TOKEN }}
