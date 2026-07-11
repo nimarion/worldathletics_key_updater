@@ -1,27 +1,35 @@
 import { Config } from 'stellate'
 
 const config: Config = {
-  config: {
-    name: 'worldathletics',
-    originUrl: 'wa-api-endpoint',
-    injectHeaders: true,
-    enablePlayground: true,
-    passThroughOnly: false,
-    headers: {
-      'x-api-key': 'wa-api-key',
+  "config": {
+    "name": "worldathletics",
+    "originUrl": "wa-api-endpoint",
+    "injectHeaders": true,
+    "enablePlayground": true,
+    "passThroughOnly": false,
+    "headers": {
+      "x-api-key": "wa-api-key"
     },
-    rules: [
+    "rules": [
       {
-        description: 'cache all queries',
-        maxAge: 43200,
-        swr: 86400,
-        types: ['Query'],
-      },
+        "types": [
+          "Query"
+        ],
+        "maxAge": 43200,
+        "swr": 86400,
+        "description": "cache all queries"
+      }
     ],
-    customAttributes: {
-      // Extract the value from the HTTP header called `x-athlete-id`
-      athleteId: { header: 'x-athlete-id' },
+    "customAttributes": {
+      "athleteId": {
+        "header": "x-athlete-id"
+      }
     },
-  },
+    "rootTypeNames": {
+      "query": "Query",
+      "mutation": "Mutation"
+    }
+  }
 }
-export default config
+
+export default config;

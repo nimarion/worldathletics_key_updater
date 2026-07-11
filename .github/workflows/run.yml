@@ -13,8 +13,8 @@ jobs:
       - name: ✨ Set up JDK
         uses: actions/setup-java@v5
         with:
-          java-version: 21
-          distribution: 'adopt'
+          java-version: 24
+          distribution: 'temurin'
       - name: 🏗️ Build with Maven
         run: mvn -B package --file pom.xml
       - name: 🌐 Install Google Chrome 
@@ -68,6 +68,6 @@ jobs:
           node-version: 22
           check-latest: true 
       - name: 🚀 Push to Stellate
-        run: npx stellate push 
+        run: npx stellate push
         env: 
           STELLATE_TOKEN: ${{ secrets.STELLATE_TOKEN }}
