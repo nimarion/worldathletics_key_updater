@@ -17,10 +17,6 @@ jobs:
           distribution: 'temurin'
       - name: 🏗️ Build with Maven
         run: mvn -B package --file pom.xml
-      - name: 🌐 Install Google Chrome 
-        run: |
-          chmod +x ./InstallChrome.sh
-          ./InstallChrome.sh
       - name: 🏃 Run jar file & Extract Configuration
         id: run_updater
         run: |
