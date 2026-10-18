@@ -52,7 +52,7 @@ jobs:
             -H "Content-Type: application/json" \
             -d "{\"endpoint\": \"${{ steps.run_updater.outputs.api_endpoint }}\"}"
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with: 
           node-version: 22
           check-latest: true 
