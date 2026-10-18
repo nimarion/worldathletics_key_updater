@@ -10,18 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: ✨ Set up JDK
-        uses: actions/setup-java@v5
-        with:
-          java-version: 24
-          distribution: 'temurin'
-      - name: 🏗️ Build with Maven
-        run: mvn -B package --file pom.xml
-      - name: 🏃 Run jar file & Extract Configuration
+      - name: Extract Configuration
         id: run_updater
         run: |
-          # Run the jar and save stdout to a temporary log file
-          java -jar target/WorldathleticsKeyUpdater-1.0-SNAPSHOT-shaded.jar > updater.log
+          # Run the script and save stdout to a temporary log file
+          python3 main.py > updater.log
           cat updater.log
 
           # Find the line containing the 'http' and split it by colon
